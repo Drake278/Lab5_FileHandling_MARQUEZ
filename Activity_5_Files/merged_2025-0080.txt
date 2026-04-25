@@ -1,0 +1,5 @@
+Welcome Marquez (ID: 2025-0080) to File Handling in Python!
+This is a new line.
+3: 3: LINE 3
+2: 2: LINE 2
+1: 1: LINE 1
