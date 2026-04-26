@@ -1,0 +1,59 @@
+import os
+import shutil
+from datetime import datetime
+
+
+student_id = "TUPM-25-0080"
+student_name = "Marquez"
+
+
+source_dir = Path.cwd() / "Activity_5_Files"
+backup_dir = os.path.join(source_dir, f"backup_{student_id}")
+log_file_path = os.path.join(source_dir, f"backup_log_{student_id}.txt")
+
+
+if not os.path.exists(backup_dir):
+    os.makedirs(backup_dir)
+
+def backup_file(filename):
+    source_path = os.path.join(source_dir, filename)
+    
+    if not os.path.exists(source_path):
+        print(f"Error: {filename} not found in {source_dir}")
+        return
+
+    
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    
+   
+    name_part, extension = os.path.splitext(filename)
+    backup_filename = f"{name_part}_{student_id}_{timestamp}{extension}"
+    destination_path = os.path.join(backup_dir, backup_filename)
+    
+  
+    shutil.copy2(source_path, destination_path)
+    
+    
+    file_size = os.path.getsize(destination_path)
+    
+   
+    log_entry = (
+        f"{'-'*30}\n"
+        f"Student ID and Name: {student_id} ({student_name})\n"
+        f"Original Filename:   {filename}\n"
+        f"Timestamp of Backup: {timestamp}\n"
+        f"File Size:           {file_size} bytes\n"
+        f"Backup File Path:    {destination_path}\n"
+    )
+    
+    with open(log_file_path, 'a') as log_file:
+        log_file.write(log_entry)
+        
+   
+    print(f"Backup completed for {student_id} ({student_name})")
+    print(f"File saved as: {backup_filename}")
+    print(f"Log updated at: {source_dir}")
+    
+    
+    
+backup_file("intro_2025-0080.txt")

@@ -1,0 +1,51 @@
+import os
+import csv
+
+# Define the directory path
+directory = Path.cwd() / "Activity_5_Files"
+results = []
+
+# 1. Automatically load all .txt files
+for filename in os.listdir(directory):
+    if filename.endswith(".txt"):
+        filepath = os.path.join(directory, filename)
+        
+        with open(filepath, 'r') as file:
+            lines = [line for line in file if line.strip()] # Ignore empty lines
+            
+            line_count = len(lines)
+            word_count = sum(len(line.split()) for line in lines)
+            char_count = sum(len(line.replace('\n', '')) for line in lines)
+            
+            # 2. Compute metrics (avoid division by zero)
+            words_per_line = word_count / line_count if line_count > 0 else 0
+            chars_per_word = char_count / word_count if word_count > 0 else 0
+            
+            results.append({
+                "Filename": filename,
+                "Lines": line_count,
+                "Words": word_count,
+                "Characters": char_count,
+                "Words/Line": round(words_per_line, 2),
+                "Chars/Word": round(chars_per_word, 2)
+            })
+
+# 3. Sort and Rank based on Word Density (Words/Line)
+results.sort(key=lambda x: x["Words/Line"], reverse=True)
+
+# 4. Tabular Output
+print(f"{'Filename':<25} | {'Lines':<5} | {'Words':<5} | {'Chars':<5} | {'Words/Line':<10} | {'Chars/Word':<10}")
+print("-" * 75)
+for r in results:
+    print(f"{r['Filename']:<25} | {r['Lines']:<5} | {r['Words']:<5} | {r['Characters']:<5} | {r['Words/Line']:<10} | {r['Chars/Word']:<10}")
+
+# Identify most and least dense
+if results:
+    print(f"\nMost content-dense: {results[0]['Filename']}")
+    print(f"Least content-dense: {results[-1]['Filename']}")
+
+# Optional: Export to CSV
+with open(os.path.join(directory, 'content_summary.csv'), 'w', newline='') as f:
+    writer = csv.DictWriter(f, fieldnames=results[0].keys())
+    writer.writeheader()
+    writer.writerows(results)
