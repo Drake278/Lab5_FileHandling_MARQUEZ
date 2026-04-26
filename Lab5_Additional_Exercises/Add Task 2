@@ -1,0 +1,47 @@
+import os
+import string
+import csv
+from collections import Counter
+
+directory = Path.cwd() / "Activity_5_Files"
+
+stopwords_file = os.path.join(directory, "stopwords.txt")
+
+
+stopwords = set()
+if os.path.exists(stopwords_file):
+    with open(stopwords_file, 'r') as f:
+        stopwords = set(word.strip().lower() for word in f.read().split())
+
+
+overall_counts = Counter()
+
+
+for filename in os.listdir(directory):
+    if filename.endswith(".txt") and filename != "stopwords.txt":
+        filepath = os.path.join(directory, filename)
+        
+        with open(filepath, 'r') as file:
+            text = file.read().lower()
+            
+            text = text.translate(str.maketrans('', '', string.punctuation))
+            
+            
+            words = [word for word in text.split() if word not in stopwords and word.isalpha()]
+            
+            overall_counts.update(words)
+
+print(f"{'Word':<15} | {'Frequency':<10}")
+print("-" * 28)
+
+
+for word, count in overall_counts.most_common(10):
+    print(f"{word:<15} | {count:<10}")
+
+
+output_csv = f"word_frequency_TUPM-25-0080.csv"
+with open(os.path.join(directory, output_csv), 'w', newline='') as f:
+    writer = csv.writer(f)
+    writer.writerow(["Word", "Frequency"])
+    for word, count in overall_counts.items():
+        writer.writerow([word, count])
