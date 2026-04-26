@@ -1,0 +1,12 @@
+------------------------------
+Student ID and Name: TUPM-25-0080 (Marquez)
+Original Filename:   intro_2025-0080.txt
+Timestamp of Backup: 20260427_000154
+File Size:           80 bytes
+Backup File Path:    c:\COMPROG projects\CMPRG_!B\Lab5_FileHandling_MARQUEZ\Activity_5_Files\backup_TUPM-25-0080\intro_2025-0080_TUPM-25-0080_20260427_000154.txt
+------------------------------
+Student ID and Name: TUPM-25-0080 (Marquez)
+Original Filename:   intro_2025-0080.txt
+Timestamp of Backup: 20260427_000314
+File Size:           80 bytes
+Backup File Path:    c:\COMPROG projects\CMPRG_!B\Lab5_FileHandling_MARQUEZ\Activity_5_Files\backup_TUPM-25-0080\intro_2025-0080_TUPM-25-0080_20260427_000314.txt
